@@ -1,4 +1,4 @@
-export interface FileItem {
+export interface IFileItem {
   id: string;
   name: string;
   size: number;
@@ -9,7 +9,7 @@ export interface FileItem {
   shared?: boolean;
 }
 
-export interface FolderItem {
+export interface IFolderItem {
   id: string;
   name: string;
   createdAt: Date;
@@ -18,8 +18,13 @@ export interface FolderItem {
   shared?: boolean;
 }
 
-export interface User {
+export interface IUser {
   id: string;
   name: string;
   email: string;
+}
+
+export interface LoginData{
+    email:string,
+    password:string
 }

@@ -9,6 +9,9 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Eye, EyeOff, Upload } from 'lucide-react';
+import { login } from '@/lib/api/auth';
+import { useDispatch } from 'react-redux';
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,19 +28,15 @@ export default function LoginPage() {
     setError('');
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      if (formData.email && formData.password) {
-        localStorage.setItem('user', JSON.stringify({ 
-          email: formData.email, 
-          name: formData.email.split('@')[0] 
-        }));
-        router.push('/dashboard');
-      } else {
-        setError('Please fill in all fields');
-      }
-      setIsLoading(false);
-    }, 1000);
+    try {
+      await login(formData)
+      setTimeout(()=>{
+        router.replace('/dashboard') // replaces history so back button doesn’t go to login
+      },1500)
+    } catch (error:any) {
+      setError(error.message)
+      setIsLoading(false)
+    }
   };
 
   return (

@@ -27,6 +27,13 @@ import {
   Clock,
   Share2
 } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/redux/userSlice';
+import storage from 'redux-persist/lib/storage';
+import { persistor } from '@/redux/store';
+import { logoutUser } from '@/lib/api/auth';
+
+
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -36,9 +43,13 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children, user }: DashboardLayoutProps) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const dispatch = useDispatch()
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
+  const handleLogout = async() => {
+    dispatch(logout());
+    await persistor.flush(); //ensure persisted state is updated
+    storage.removeItem('persist:auth');//clear persisted redux state
+    await logoutUser()
     router.push('/login');
   };
 

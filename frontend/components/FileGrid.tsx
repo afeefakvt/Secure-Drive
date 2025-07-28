@@ -13,7 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { FileItem, FolderItem } from '@/types/files';
+import { IFileItem, IFolderItem } from '@/types/files';
 import { getFileIcon } from '@/lib/fileUtils';
 import {
   MoreVertical,
@@ -29,8 +29,8 @@ import {
 import { formatFileSize, formatDate } from '@/lib/formatter';
 
 interface FileGridProps {
-  files: FileItem[];
-  folders: FolderItem[];
+  files: IFileItem[];
+  folders: IFolderItem[];
   viewMode: 'grid' | 'list';
   selectedItems: string[];
   onSelectionChange: (selectedIds: string[]) => void;
